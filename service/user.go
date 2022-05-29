@@ -13,3 +13,11 @@ func (UserService) GetAllUsers() []model.User {
 
 	return tests
 }
+
+func (UserService) CreateUser(user *model.User) error {
+	_, err := DbEngine.Insert(user)
+	if err != nil {
+		return err
+	}
+	return nil
+}
