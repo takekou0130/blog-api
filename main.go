@@ -1,17 +1,14 @@
 package main
 
 import (
-	"net/http"
+	"blog-api/controller"
 
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	engine := gin.Default()
-	engine.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "hello, world",
-		})
-	})
-	engine.Run(":3000")
+
+	engine.GET("/users", controller.Index)
+	engine.Run(":3030")
 }
