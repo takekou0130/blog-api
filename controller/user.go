@@ -10,7 +10,11 @@ import (
 
 func Index(c *gin.Context) {
 	userService := service.UserService{}
-	lists := userService.GetAllUsers()
+	lists, err := userService.GetAllUsers()
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Server error")
+		return
+	}
 	c.JSONP(http.StatusOK, gin.H{
 		"message": "ok",
 		"data":    lists,
