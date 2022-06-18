@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 
@@ -15,8 +16,11 @@ var DbEngine *xorm.Engine
 
 func init() {
 	driverName := "mysql"
-	// DsName := "root:mysql_pass2021@tcp(localhost:3306)/blog?charset=utf8"
-	DsName := "root:password@tcp(blog-db:3306)/blog?charset=utf8"
+	mysqlRootPassword := os.Getenv("MYSQL_ROOT_PASSWORD")
+	// docker-composeで動かす場合、hostはlocalhostではなくcontainer_nameになる
+	mysqlHost := os.Getenv("MYSQL_HOST")
+	mysqlPort := os.Getenv("MYSQL_PORT")
+	DsName := "root:" + mysqlRootPassword + "@tcp(" + mysqlHost + ":" + mysqlPort + ")/blog?charset=utf8"
 	err := errors.New("")
 	DbEngine, err = xorm.NewEngine(driverName, DsName)
 	if err != nil && err.Error() != "" {
