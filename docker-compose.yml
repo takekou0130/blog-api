@@ -11,6 +11,9 @@ services:
       MYSQL_DATABASE: blog
     ports:
       - 3306:3306
+    # for access from ui
+    networks:
+      - blog
   api:
     image: gin
     container_name: blog-api
@@ -24,3 +27,11 @@ services:
       - 3030:3030
     depends_on:
       - db
+    # for access from ui
+    networks:
+      - blog
+# for access from ui
+networks:
+  blog:
+    name: blog
+    external: true
